@@ -9,6 +9,8 @@ import SplashPage from './components/splashpage/SplashPage'
 import LandingPage from './components/landingpage/LandingPage'
 import UserRegistration from './components/UserRegistration/UserRegistration'
 
+import Landing2 from './components/landingpage/Landing2'
+
 import Bet from './components/Bet/Bet'
 import Login from './components/Login/Login'
 import Leaderboard from './components/Leaderboard/Leaderboard'
