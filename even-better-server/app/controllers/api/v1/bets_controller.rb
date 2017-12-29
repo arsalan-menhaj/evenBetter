@@ -6,7 +6,8 @@ module Api::V1
     before_action :update_sports_bets, only: [:get_acceptances, :show]
 
     def index
-        @bets = current_user.bets
+        @bets = BetUser.left_outer_joins(:bet).select('bets.*, bets_users.has_accepted').where(user_id: current_user.id)
+        puts @bets
         render json: @bets
     end
 

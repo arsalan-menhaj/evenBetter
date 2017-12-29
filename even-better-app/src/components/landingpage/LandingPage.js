@@ -44,6 +44,29 @@ class LandingPage extends Component {
     return this.state
   }
 
+  categorize = (bets) => {
+    for (var bet of bets) {
+        if (!bet.has_accepted) {
+            if (bet.mediator_id  == this.props.currentUser) {
+                this.setState({
+                    ...this.state,
+                    mediationRequests: this.state.mediationRequests + JSON.stringify(bet)
+                })
+            } else if (bet.creator_id != this.props.currentUser) {
+                this.setState({
+                    ...this.state,
+                    invites: this.state.invites + JSON.stringify(bet)
+                })
+            }
+        } else {
+            this.setState({
+                ...this.state,
+                activeBets: this.state.activeBets + JSON.stringify(bet)
+            })
+        }
+    }
+  }
+
   // Helper function that allows Invites to be loaded/reloaded
   loadInvites = () => {
     axios.get(`/api/v1/bets/invites.json`, config)

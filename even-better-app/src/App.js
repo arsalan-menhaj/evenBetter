@@ -87,12 +87,12 @@ class App extends Component {
           <div style={{ paddingTop: 64 }}></div>
           <main>
             <Switch>
-              <PrivateRoute exact path='/' currentUser={ this.state.currentUser } component={LandingPage} />
+              <PrivateRoute exact path='/' currentUser={ this.state.currentUser } component={Landing2} />
               <Route path='/signup' component={UserRegistration}/>
               <Route path='/login'
                 render={(props) => <Login {...props} handleLoginSuccess={ this.handleLoginSuccess }/>}
               />
-              <PrivateRoute path='/home' currentUser={ this.state.currentUser } component={LandingPage}/>
+              <PrivateRoute path='/home' currentUser={ this.state.currentUser } component={Landing2}/>
               <PrivateRoute path='/bets/:id' currentUser={ this.state.currentUser } component={ Bet } />
               <PrivateRoute path='/leaderboard' currentUser={ this.state.currentUser } component={Leaderboard}/>
               <Route component={ NotFound } />

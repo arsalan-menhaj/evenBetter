@@ -16,31 +16,30 @@ class Landing2 extends Component {
     
         this.state = {
           user: {},
-          bets: [],
           invites: [],
           mediationRequests: [],
           activeBets: []
         }
     }
 
-    categorize = () => {
-        for (var bet of this.state.bets) {
+    categorize = (bets) => {
+        for (var bet of bets) {
             if (!bet.has_accepted) {
                 if (bet.mediator_id  == this.props.currentUser) {
                     this.setState({
                         ...this.state,
-                        mediationRequests: this.state.mediationRequests.push(bet)
+                        mediationRequests: this.state.mediationRequests + JSON.stringify(bet)
                     })
                 } else if (bet.creator_id != this.props.currentUser) {
                     this.setState({
                         ...this.state,
-                        invites: this.state.invites.push(bet)
+                        invites: this.state.invites + JSON.stringify(bet)
                     })
                 }
             } else {
                 this.setState({
                     ...this.state,
-                    activeBets: this.state.activeBets.push(bet)
+                    activeBets: this.state.activeBets + JSON.stringify(bet)
                 })
             }
         }
@@ -50,6 +49,7 @@ class Landing2 extends Component {
         UserStore.find(this.props.currentUser)
           .then((response) => {
             this.setState({
+              ...this.state,
               user: response
             })
           })
@@ -58,20 +58,19 @@ class Landing2 extends Component {
     componentDidMount() {
         // Get ALL bets for current user
         // categorize bets
-        axios.get(`/api/v1/bets`, config)
+        axios.get(`/api/v1/bets.json`, config)
         .then(response => {
-            console.log("Received bets");
-            this.categorize()
+            console.log("Received bets: " + response.data);
+            this.categorize(response.data)
         })
     }
 
     render() {
         return (
             <div>
-                {JSON.stringify(this.state.bets)}  
-                {JSON.stringify(this.state.invites)}
-                {JSON.stringify(this.state.mediationRequests)}
-                {JSON.stringify(this.state.activeBets)}
+                {this.state.invites}
+                {this.state.mediationRequests} 
+                {this.state.activeBets}
             </div>
         )
     }
